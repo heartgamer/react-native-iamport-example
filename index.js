@@ -13,13 +13,28 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
+  Platform,
 } from 'react-native';
 import IAmPort from 'react-native-iamport';
-import { StackNavigator } from 'react-navigation';
+import {Actions, Scene, Router, ActionConst} from 'react-native-router-flux';
 
 // Components
 import BillingPage from './components/BillingPage';
 import BillingResultPage from './components/BillingResultPage';
+
+export default class ReactNativeIAmPort extends Component {
+  render() {
+    return (
+      <Router>
+        <Scene key="root">
+          <Scene key="Home" component={Home} title="메인화면" />
+          <Scene key="BillingPage" component={BillingPage} title="결제화면" />
+          <Scene key="BillingResultPage" component={BillingResultPage} title="결제결과" type={ActionConst.REPLACE} />
+        </Scene>
+      </Router>
+    )
+  }
+}
 
 const PG_TYPE = {
   NICE: 'nice',
@@ -35,10 +50,8 @@ class Home extends Component {
   }
 
   _onPressCheck(pgType) {
-    const { navigate } = this.props.navigation;
-
-    navigate('BillingPage', {
-      code: "yourcode",
+    Actions.BillingPage({
+      code: "가맹점식별코드",
       pg: (pgType == PG_TYPE.VBANK | PG_TYPE.CARD) ? PG_TYPE.NICE : pgType,
       pay_method: (pgType == PG_TYPE.VBANK) ? "vbank" : "card",
       app_scheme: "jeffgukangiamport",
@@ -48,7 +61,7 @@ class Home extends Component {
       buyer_name: "jeffgukang",
       buyer_tel: "010-1234-5678",
       buyer_addr: "서울특별시 강남구 삼성동",
-      buyer_postcode: "123-456"
+      buyer_postcode: "123-456",
     });
   }
 
@@ -78,6 +91,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:Platform.OS === 'ios'? 64 : 54, //nav bar height
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
@@ -89,10 +103,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReactNativeIAmPort = StackNavigator({
-  Home: { screen: Home },
-  BillingPage: { screen: BillingPage },
-  BillingResultPage: { screen: BillingResultPage},
-});
 
 AppRegistry.registerComponent('ReactNativeIAmPort', () => ReactNativeIAmPort);
