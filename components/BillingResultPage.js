@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 import {
   View,
-  StyleSheet,
-  Dimensions,
+  Text,
+  StyleSheet,  
+  Platform,
 } from 'react-native';
 import IAmPort from 'react-native-iamport';
-
 
 class BillingResultPage extends React.Component {
   static navigationOptions = {
@@ -14,13 +14,13 @@ class BillingResultPage extends React.Component {
 
   render() {
     const {
-      billingResult
-    } = this.props.navigation.state.params;
+      billingResponse
+    } = this.props;
 
     return (
       <View style={styles.container}>
-        <Text>결제 {billingResult.result}</Text>
-        <Text>{billingResult.result == 'success' ? billingResult.imp_uid : '결제가 실패하였습니다.'}</Text>
+        <Text>결제 {billingResponse.result}</Text>
+        <Text>{billingResponse.result == 'success' ? billingResponse.imp_uid : '결제가 실패하였습니다.'}</Text>
       </View>
     );
   }
@@ -29,6 +29,7 @@ class BillingResultPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:Platform.OS === 'ios'? 64 : 54, //nav bar height
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',

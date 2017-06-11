@@ -3,24 +3,24 @@ import {
   View,
   StyleSheet,
   Dimensions,
+  Platform,
 } from 'react-native';
 import IAmPort from 'react-native-iamport';
-
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 class BillingPage extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     title: '결제화면',
-  }
+  });
 
   // 결제 결과에 따른 처리
   _onPaymentResultReceive(response) {
     console.log('_onPaymentResultReceive');
     console.log(response);
-    if (response.result == "success") {
-      alert(response.imp_uid);
-    } else {
-      alert('결제가 실패하였습니다. 다시 시도해주세요');
-    }
+    Actions.BillingResultPage({
+      billingResponse: response,
+      type: ActionConst.REPLACE,
+    });
   }
 
   render() {
@@ -36,7 +36,7 @@ class BillingPage extends React.Component {
       buyer_tel,
       buyer_addr,
       buyer_postcode,
-    } = this.props.navigation.state.params;
+    } = this.props;
 
     return (
       <View style={styles.container}>
@@ -65,6 +65,7 @@ class BillingPage extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop:Platform.OS === 'ios'? 64 : 54, //nav bar height
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
