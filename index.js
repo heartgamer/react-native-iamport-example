@@ -54,7 +54,7 @@ class Home extends Component {
       code: "가맹점식별코드",
       pg: (pgType == PG_TYPE.VBANK | PG_TYPE.CARD) ? PG_TYPE.NICE : pgType,
       pay_method: (pgType == PG_TYPE.VBANK) ? "vbank" : "card",
-      app_scheme: "jeffgukangiamport",
+      app_scheme: "iamport",
       name: "주문명:결제테스트",
       amount: 1000,
       buyer_email: "iamport@siot.do",
