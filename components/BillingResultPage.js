@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import {
   View,
   Text,
-  StyleSheet,  
+  StyleSheet,
   Platform,
 } from 'react-native';
 import IAmPort from 'react-native-iamport';
@@ -20,7 +20,7 @@ class BillingResultPage extends React.Component {
     return (
       <View style={styles.container}>
         <Text>결제 {billingResponse.result}</Text>
-        <Text>{billingResponse.result == 'success' ? billingResponse.imp_uid : '결제가 실패하였습니다.'}</Text>
+        <Text>{billingResponse.result == 'success' ? billingResponse.imp_uid : billingResponse.original}</Text>
       </View>
     );
   }
